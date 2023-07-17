@@ -31,6 +31,10 @@ private:
     // Mutex to avoid race condition between readNumbersFromFile and generateNumbers threads
     std::mutex m;
 
+    // Variable to store numbers read from the file. Not necessary since we're using shared data
+    // But using for validation purposes to check if the algorithm is working properly.
+    std::vector<int> numbersFromFile;
+
     /**
      * @brief: Auxiliary function to provide file handling before actually start processing the test file.
      * By default the extension is set to txt.
@@ -101,12 +105,16 @@ public:
             m.lock();
             // TODO: Set verbosity flag
             // Using this print statement to check if threading was succesfull.
-            std::cout << "\nReading number from the user-provided file:" << number;
+            //std::cout << "\nReading number from the user-provided file: " << number;
             numbers.push_back(number);
             // Unlocks it so that next instruction from other thread can be executed
             m.unlock();
+
+            // For validation purposes only, data is appendend to other vector to check and compare later on
+            numbersFromFile.push_back(number);
         }
         inputFile.close();
+
 
     }
 
@@ -150,6 +158,21 @@ public:
         std::cout << std::endl;
     }
 
+    /**
+     * @brief Shows numbers read from the file in the current terminal session.
+     * Main purpose of this method is to validate if the algorithm is reading and sorting the numbers
+     * read from the file correctly.
+     * This method makes use of the numbersFromFile attribute, which was created specifically for that.
+    */
+    void showNumbersFromFile() {
+        
+        std::cout << "\nNumbers read from the file: " << std::endl;
+        for (const auto& number : numbersFromFile) {
+            std::cout << number << " ";
+        }
+        std::cout << std::endl;
+    }
+
 };
 
 int main() {
@@ -171,13 +194,15 @@ int main() {
         sorter.generateNumbers(additionalGeneratedNumbers, generatedNumbersMaxValue);
     });
     
-
     // Waits all thhreads to finish
     readerThread.join();
     generatorThread.join();
 
     // Sort numbers
     sorter.sortNumbers();
+
+    // Show numbers read from the file
+    sorter.showNumbersFromFile();
 
     // Shows the sorted numbers
     sorter.showSortedNumbers();

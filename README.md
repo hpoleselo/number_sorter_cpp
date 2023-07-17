@@ -47,7 +47,7 @@ Expected Output:
 - [ ] Feature: check file consistency, if provided file is using backspaces and add handling for such scenarios.
 - [ ] Unit tests and fulfill at least 80% code coverage.
 - [ ] Set-up Codacy/Sonarqube to track code smells and so on.
-- [ ] Add logging.
+- [ ] [Add logging](https://stackoverflow.com/questions/1255576/what-is-good-practice-for-generating-verbose-output).
 - [ ] Trade-off on performance comparison by having a specific thread to sort the data and accounting for the overhead by using Load Testing.
 - [ ] Refactor: Unique Lock instead of lock.
 
