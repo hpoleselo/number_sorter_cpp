@@ -64,9 +64,11 @@ public:
     /**
      * @brief Reads integer numbers separated by space from a .txt file.
      * 
-     * Takes in filename as parameter.
-     * Creates a input file stream object to read the provided filename.
-     * Stores read numbers to the NumberSorter numbers vector<int> attribute, which is a . 
+     * 1. Checks if the file name conforms with the expected .txt format.
+     * 2. Takes in filename as parameter.
+     * 3. Creates a input file stream object to read the provided filename.
+     * 4. Check if file is empty.
+     * 5. Stores read numbers to the numbers object's attribute by using mutex.
     */
     void readNumbersFromFile(const std::string& fileName) {
 
@@ -92,17 +94,24 @@ public:
         int number;
 
         while (inputFile >> number) {
+            // Adds Mutex locking to prevent race condition when using the generatorThread to append values to the object's attribute
             m.lock();
             // TODO: Set verbosity flag
             // Using this print statement to check if threading was succesfull.
             std::cout << "\nReading number from the user-provided file:" << number;
             numbers.push_back(number);
+            // Unlocks it so that next instruction from other thread can be executed
             m.unlock();
         }
         inputFile.close();
 
     }
 
+    /**
+     * @brief Generate random integer numbers.  
+     * 1. Takes in user-defined parameters for setting the total numbers of integers to be generated and the maximal threshold value.
+     * 2. Generated numbers are stored in the same NumberSorter's numbers attribute and makes use of mutex to avoid data racing between threads.
+    */
     void generateNumbers(int count, int int_interval_max_threshold) {
         std::random_device rd;
         std::mt19937 generator(rd());
@@ -117,10 +126,19 @@ public:
         }
     }
 
+    /**
+     * @brief Sort numbers using std::sort from C++ STL.  
+     * The choice for such algorithm was for its simplicity: doesn't require additional implementation and
+     * provides solid performance for moderated size list of numbers with complexity of O(N logN).
+    */
     void sortNumbers() {     
         std::sort(numbers.begin(), numbers.end());
     }
 
+
+    /**
+     * @brief Shows sorted numbers to the current terminal session.
+    */
     void showSortedNumbers() {
         std::cout << "\nSorted Numbers: " << std::endl;
         for (const auto& number : numbers) {
