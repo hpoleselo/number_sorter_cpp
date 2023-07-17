@@ -12,11 +12,11 @@ NumberSorter was developed in:
 
 Clone this repository:
 
-` $ git clone git@github.com:hpoleselo/number_sorter_cpp.git`
+`$ git clone git@github.com:hpoleselo/number_sorter_cpp.git`
 
 Run the provided executable:
 
-` $ ./NumberSorter`
+`$ ./NumberSorter`
 
 There's an out-of-the-box `NumbersToBeSorted.txt` file which has some pre-defined integers to validate the application. One can extend this file to contain more numbers, such file is located in the root directory of this repository. Recall the file must contain **integers separated by spaces**, otherwise other cases will be disregarded.
 
@@ -32,16 +32,15 @@ Or if wished to build it with GCC:
 
 To avoid any compatibility issues, one is able to run this application containerized using Podman/Docker. Make sure to be in the root folder of this repository and build the image:
 
-` $ podman build -t numbersorter .`
+`$ podman build -t numbersorter .`
 
 Run the container (in my local it ended up building with the `localhost/` tag prefix):
 
-` $ podman run --rm -it localhost/programsorter:latest`
+`$ podman run --rm -it localhost/programsorter:latest`
 
 Expected Output:
 
-![image_2023-07-16_22-53-32](https://github.com/hpoleselo/number_sorter_cpp/assets/24254286/8d62b9d3-a8a7-44d2-9848-107529ec47dc)
-
+![image_2023-07-17_07-43-20](https://github.com/hpoleselo/number_sorter_cpp/assets/24254286/77fc5b05-848d-4e41-bdf5-45051768e5e3)
 
 ## Next Steps | Future Implementations
 
