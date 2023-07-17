@@ -10,6 +10,9 @@
 #include <algorithm>
 #include <thread>
 #include <mutex>
+#include <atomic>
+
+std::atomic<bool> terminateFlag(false);
 
 /**
  * @brief This class represents a NumberSorter object.
@@ -29,6 +32,27 @@ private:
     // Mutex to avoid race condition between readNumbersFromFile and generateNumbers threads
     std::mutex m;
 
+    /**
+     * @brief: Auxiliary function to provide file handling before actually start processing the test file.
+     * By default the extension is set to txt.
+    */
+    bool hasExtension(const std::string& fileName) {
+
+        const std::string& extension = "txt";
+
+        // Find the position of the last dot in the file name (will break with hidden files/folders)
+        size_t dotPos = fileName.find_last_of(".");
+        if (dotPos != std::string::npos) {
+            // Extracts the file extension from the file name
+            std::string fileExtension = fileName.substr(dotPos + 1);
+            
+            // Compare the extracted extension with the desired extension
+            return (fileExtension == extension);
+        }
+        // No file extension found
+        return false;
+    }
+
 public:
 
     /**
@@ -39,10 +63,20 @@ public:
      * Stores read numbers to the NumberSorter numbers vector<int> attribute, which is a . 
     */
     void readNumbersFromFile(const std::string& filename) {
+
+        // Conditional Guard to check before opening the file, checks the file extension
+        // to spare resources and avoid future errors.
+        if (hasExtension(filename)) {
+            std::cout << "Provided file is a txt file, proceeding with the number reading..." << std::endl;
+        } else {
+            std::cout << "File does not have the desired extension. Terminating thread/application..." << std::endl;
+            std::terminate();
+        }
+
         std::ifstream inputFile(filename);
+
         int number;
-        // TODO: Add try except/to handle when it's not an integer?
-        // TODO: Show logging if the file was opened!
+
         while (inputFile >> number) {
             m.lock();
             std::cout << "Reading number from the user-provided file:" << std::endl;
@@ -50,6 +84,7 @@ public:
             m.unlock();
         }
         inputFile.close();
+
     }
 
     void generateNumbers(int count, int int_interval_max_threshold) {
