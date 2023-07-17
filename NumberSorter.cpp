@@ -1,7 +1,9 @@
-/* 
-    * Author: Henrique Poleselo @hpoleselo
-    * Date: 07-16-2023
-*/
+/**
+ * @file NumberSorter.cpp
+ * @brief TumberSorter is a C++ program that makes use of OOP to implement a NumberSorter class.
+ * * Author: Henrique Poleselo @hpoleselo
+ * * Date: 07-16-2023
+ */
 
 #include <iostream>
 #include <fstream>
@@ -32,6 +34,7 @@ private:
     /**
      * @brief: Auxiliary function to provide file handling before actually start processing the test file.
      * By default the extension is set to txt.
+     * @param: TODO
     */
     bool hasExtension(const std::string& fileName) {
 
