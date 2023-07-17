@@ -5,7 +5,7 @@ NumberSorter is a C++ program that makes use of OOP to implement a NumberSorter 
 NumberSorter was developed in:
 
 - Ubuntu 20.04
-- g++ 9.4.0
+- GCC 9.4.0
 - C++ 17
 
 ## Running the Application
@@ -25,6 +25,21 @@ There's an out-of-the-box `NumbersToBeSorted.txt` file which has some pre-define
 Or if wished to build it with GCC:
 
 `$ gcc -o NumberSorter NumberSorter.cpp -pthread -lstdc++`
+
+## Building the Containerized Application Locally
+
+To avoid any compatibility issues, one is able to run this application containerized using Podman/Docker. Make sure to be in the root folder of this repository and build the image:
+
+` $ podman build -t numbersorter .`
+
+Run the container (in my local it ended up building with the `localhost/` tag prefix):
+
+` $ podman run --rm -it localhost/programsorter:latest`
+
+Expected Output:
+
+![image_2023-07-16_22-53-32](https://github.com/hpoleselo/number_sorter_cpp/assets/24254286/8d62b9d3-a8a7-44d2-9848-107529ec47dc)
+
 
 ## Next Steps | Future Implementations
 
