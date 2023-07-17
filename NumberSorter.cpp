@@ -10,9 +10,6 @@
 #include <algorithm>
 #include <thread>
 #include <mutex>
-#include <atomic>
-
-std::atomic<bool> terminateFlag(false);
 
 /**
  * @brief This class represents a NumberSorter object.
@@ -53,6 +50,15 @@ private:
         return false;
     }
 
+    /**
+     * @brief: Auxiliary function to check if file is empty.
+    */
+    bool isFileEmpty(const std::string& fileName) {
+        std::ifstream file(fileName);
+        return file.peek() == std::ifstream::traits_type::eof();
+    }
+
+
 public:
 
     /**
@@ -62,24 +68,34 @@ public:
      * Creates a input file stream object to read the provided filename.
      * Stores read numbers to the NumberSorter numbers vector<int> attribute, which is a . 
     */
-    void readNumbersFromFile(const std::string& filename) {
+    void readNumbersFromFile(const std::string& fileName) {
 
         // Conditional Guard to check before opening the file, checks the file extension
         // to spare resources and avoid future errors.
-        if (hasExtension(filename)) {
+        if (hasExtension(fileName)) {
             std::cout << "Provided file is a txt file, proceeding with the number reading..." << std::endl;
         } else {
             std::cout << "File does not have the desired extension. Terminating thread/application..." << std::endl;
             std::terminate();
         }
 
-        std::ifstream inputFile(filename);
+        // Reads file contents
+        std::ifstream inputFile(fileName);
+
+        // Checks if file is empty, for now for logging purposes
+        if (isFileEmpty(fileName)) {
+            std::cout << "Either the file provided doesn't exist or it's empty, generator Thread will generature the numbers anyway..." << std::endl;
+        } else {
+            std::cout << "File could be read succcesfully." << std::endl;
+        }
 
         int number;
 
         while (inputFile >> number) {
             m.lock();
-            std::cout << "Reading number from the user-provided file:" << std::endl;
+            // TODO: Set verbosity flag
+            // Using this print statement to check if threading was succesfull.
+            std::cout << "\nReading number from the user-provided file:" << number;
             numbers.push_back(number);
             m.unlock();
         }
@@ -106,7 +122,7 @@ public:
     }
 
     void showSortedNumbers() {
-        std::cout << "Sorted Numbers:" << std::endl;
+        std::cout << "\nSorted Numbers: " << std::endl;
         for (const auto& number : numbers) {
             std::cout << number << " ";
         }
@@ -120,9 +136,9 @@ int main() {
     NumberSorter sorter;
 
     // Thread to read nymbers from the user-provided file concurrently
-    std::string filename = "IntegerNumbersToBeSorted.txt";
-    std::thread readerThread([&sorter, &filename]() {
-        sorter.readNumbersFromFile(filename);
+    std::string fileName = "IntegerNumbersToBeSorted.txt";
+    std::thread readerThread([&sorter, &fileName]() {
+        sorter.readNumbersFromFile(fileName);
     });
 
     // Sets number of numbers to be generated and number max threshold
