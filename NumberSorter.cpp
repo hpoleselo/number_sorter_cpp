@@ -1,6 +1,6 @@
 /**
  * @file NumberSorter.cpp
- * @brief TumberSorter is a C++ program that makes use of OOP to implement a NumberSorter class.
+ * @brief NumberSorter is a C++ program that makes use of OOP to implement a NumberSorter class.
  * * Author: Henrique Poleselo @hpoleselo
  * * Date: 07-16-2023
  */
