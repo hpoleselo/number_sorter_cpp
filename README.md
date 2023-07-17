@@ -24,7 +24,7 @@ There's an out-of-the-box `NumbersToBeSorted.txt` file which has some pre-define
 
 Or if wished to build it with GCC:
 
-`$ gcc `
+`$ gcc -o NumberSorter NumberSorter.cpp -pthread -lstdc++`
 
 ## Next Steps | Future Implementations
 
