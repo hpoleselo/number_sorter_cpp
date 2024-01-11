@@ -42,10 +42,14 @@ Expected Output:
 
 ![image_2023-07-17_07-43-20](https://github.com/hpoleselo/number_sorter_cpp/assets/24254286/77fc5b05-848d-4e41-bdf5-45051768e5e3)
 
+## Testing
+
+`$ g++ -std=c++17 NumberSorter.cpp tests/test_NumberSorter.cpp -lgtest -lgtest_main -pthread -o test_executable`
+
 ## Next Steps | Future Implementations
 
 - [ ] Feature: check file consistency, if provided file is using backspaces and add handling for such scenarios.
-- [ ] Unit tests and fulfill at least 80% code coverage.
+- [ X ] Unit tests and fulfill at least 80% code coverage.
 - [ ] Set-up Codacy/Sonarqube to track code smells and so on.
 - [ ] [Add logging](https://stackoverflow.com/questions/1255576/what-is-good-practice-for-generating-verbose-output).
 - [ ] Trade-off on performance comparison by having a specific thread to sort the data and accounting for the overhead by using Load Testing.
