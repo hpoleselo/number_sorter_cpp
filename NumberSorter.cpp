@@ -23,7 +23,7 @@ bool NumberSorter::hasExtension(const std::string& fileName) {
     if (dotPos != std::string::npos) {
         // Extracts the file extension from the file name
         std::string fileExtension = fileName.substr(dotPos + 1);
-        
+
         // Compare the extracted extension with the desired extension
         return (fileExtension == extension);
     }
@@ -32,8 +32,11 @@ bool NumberSorter::hasExtension(const std::string& fileName) {
 }
 
 bool NumberSorter::isFileEmpty(const std::string& fileName) {
-    std::ifstream file(fileName);
-    return file.peek() == std::ifstream::traits_type::eof();
+    std::ifstream file(fileName, std::ios::binary | std::ios::ate);
+    if (!file.is_open()) {
+        return false;  // Unable to open file
+    }
+    return file.tellg() == 0;  // Check if file size is zero
 }
 
 void NumberSorter::readNumbersFromFile(const std::string& fileName) {
@@ -91,7 +94,7 @@ void NumberSorter::generateNumbers(int count, int int_interval_max_threshold) {
     }
 }
 
-void NumberSorter::sortNumbers() {     
+void NumberSorter::sortNumbers() {
     std::sort(numbers.begin(), numbers.end());
 }
 
