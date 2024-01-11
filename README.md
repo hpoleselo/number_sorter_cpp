@@ -22,7 +22,7 @@ There's an out-of-the-box `NumbersToBeSorted.txt` file which has some pre-define
 
 ## Building the Application Locally
 
-`$  g++ -std=c++17 NumberSorter.cpp -lpthread -o NumberSorter`
+`$ g++ -std=c++17 main.cpp NumberSorter.cpp -lpthread -o NumberSorter`
 
 Or if wished to build it with GCC:
 
